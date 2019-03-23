@@ -98,12 +98,12 @@ var posep;
 			getDistance(pose_user.keypoints[7].position,pose_user.keypoints[9].position)
 		);
 		console.log(left_default_angle);
-		console.log(left_user_angle);
+		console.log(right_user_angle);
 		if(Math.abs(left_default_angle - left_user_angle) < 5){
 			console.log("Left Correct")
 		}
 		console.log(right_default_angle);
-		console.log(right_user_angle);
+		console.log(left_user_angle);
 		if(Math.abs(right_default_angle - right_user_angle) < 5){
 			console.log("Right Correct")
 		}
@@ -113,9 +113,9 @@ var posep;
 		var double_B = Math.pow(distance_B, 2);
 		var double_C = Math.pow(distance_C, 2);
 		var x = 2*distance_B*distance_C;
-		var z = double_B + double_C - x;
-		var angle = z/distance_opuesta;	
-		return angle;
+		var z = (double_B + double_C -(distance_opuesta*distance_opuesta)) / x;
+		var angle = Math.acos(z);
+		return (angle*180)/Math.PI;
 	}
 
 	function getDistance(a, b) {
