@@ -8,7 +8,7 @@ width = 712,
 height =400;
 
 var images = ['/images/man.jpg', '/images/images.jpg', '/images/DeLado.jpg', '/images/guardiaA.jpg',
-	'/images/GuardiaB.jpg', '/images/GuardiaBaja.jpg', '/images/puñetazo.jpg'];
+	'/images/GuardiaB.jpg', '/images/GuardiaBaja.jpg', '/images/puñetazo.jpg', '/images/saludo.jpg'];
 var point = 0;
 
 async function takepicture() {
