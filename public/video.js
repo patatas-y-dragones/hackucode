@@ -80,6 +80,14 @@ var posep;
 		console.log(poser_user.keypoints);
 	}
 	
+	function comparePartOfBody(pose_user, pose_default){
+		if (pose_default > 0.75){
+			if (pose_default - pose_user < 0.05){
+				console.log("Correcte");
+			}
+		} 
+	}
+	
 	startbutton.addEventListener('click', function(ev){
 		takepicture();
 		ev.preventDefault();
