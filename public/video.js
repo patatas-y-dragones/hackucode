@@ -1,3 +1,4 @@
+var posep;
 (function() {
 	
 	var streaming = false,
@@ -57,8 +58,26 @@
 		posenet.load().then(function (net) {
 			return net.estimateSinglePose(image, imageScaleFactor, flipHorizontal, outputStride)
 		}).then(function (pose) {
-			console.log(pose);
+			haveAllTwoPositions(pose);
 		})
+	}
+
+	function haveAllTwoPositions(pose_user) {
+		var imgDeft = document.getElementById('img1');
+		posenet.load().then(function (net) {
+			return net.estimateSinglePose(imgDeft, imageScaleFactor, flipHorizontal, outputStride)
+		}).then(function(pose2){
+			console.log(pose_user, pose2);
+			compareTwoPoses(pose_user, pose2);
+		})
+	}
+
+	function compareTwoPoses(pose_user, pose_default) {
+		var i;
+		for(i = 0; i < 17; i++) {
+			comparePartOfBody(pose_user.keypoints[i],pose_default.keypoints[i])
+		}
+		console.log(poser_user.keypoints);
 	}
 	
 	startbutton.addEventListener('click', function(ev){
