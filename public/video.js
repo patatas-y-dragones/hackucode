@@ -7,6 +7,7 @@ mainImage = document.querySelector('#img1'),
 width = 320,
 height = 0;
 
+
 const MAX_ITERS = 5;
 
 var dist_op_lda = 0, dist_B_lda=0, dist_C_lda=0;
@@ -19,7 +20,10 @@ var dist_op_lua_legs = 0, dist_B_lua_legs=0, dist_C_lua_legs=0;
 var dist_op_rda_legs = 0, dist_B_rda_legs=0, dist_C_rda_legs=0;
 var dist_op_rua_legs = 0, dist_B_rua_legs=0, dist_C_rua_legs=0;
 
-var images = ['/images/man.jpg', '/images/images.jpg'];
+
+var images = ['/images/man.jpg', '/images/images.jpg', '/images/DeLado.jpg', '/images/guardiaA.jpg',
+	'/images/GuardiaB.jpg', '/images/GuardiaBaja.jpg', '/images/puñetazo.jpg'];
+
 var point = 0;
 
 var iter = 0;
