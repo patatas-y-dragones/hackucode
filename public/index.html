@@ -1,18 +1,6 @@
-<!--<html>
-
-<head>
-  <title>Express</title>
-  <link rel="stylesheet" href="/stylesheets/style.css">
-</head>
-
-<body>
-  <h1>Express</h1>
-  <p>Welcome to Express</p>
-</body>
-
-</html>-->
-
+<!DOCTYPE html>
 <html>
+
 <head>
     <title>PoseNet - Camera Feed Demo</title>
     <style>
@@ -23,64 +11,65 @@
             width: 100%;
             color: black;
         }
+
         .footer-text {
             max-width: 600px;
             text-align: center;
             margin: auto;
         }
+
         @media only screen and (max-width: 600px) {
             .footer-text, .dg {
                 display: none;
             }
         }
     </style>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="computation.js"></script>
     <!-- Load TensorFlow.js -->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+
     <!-- Load Posenet -->
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
-<img id='cat' src='/images/images.jpg' crossorigin="anonymous"/>
-</body>
-<div id="info" style='display:none'>
+<div id="info" style="display:none">
 </div>
 <div id="loading">
     Loading the model...
 </div>
 
-<div id='main' style='display:none'>
-    <video id="video" playsinline style=" -moz-transform: scaleX(-1);
+<div id="main" style="display:none">
+    <video id="video" playsinline="" style=" -moz-transform: scaleX(-1);
         -o-transform: scaleX(-1);
         -webkit-transform: scaleX(-1);
         transform: scaleX(-1);
         display: none;
         ">
     </video>
-    <canvas id="output" />
-</div>
-<div class="footer">
-    <div class="footer-text">
-        <p>
-            PoseNet runs with either a <strong>single-pose</strong> or <strong>multi-pose</strong> detection algorithm. The single person pose detector is faster and more accurate but requires only one subject present in the image.
-            <br>
-            <br> The <strong>output stride</strong> and <strong>image scale factor</strong> have the largest effects on accuracy/speed. A <i>higher</i> output stride results in lower accuracy but higher speed. A <i>higher</i> image scale factor results in higher accuracy but lower speed.
-        </p>
-    </div>
-</div>
-<script src="camera.js"></script>
+    <img id="img1" src="/images/man.jpg" width="400" height="400"></img>
+    <canvas id="output">
+    </canvas></div>
+
+<script>
+	var image = document.getElementById('img1');
+</script>
+
 <script>
 	var imageScaleFactor = 0.5;
 	var outputStride = 16;
 	var flipHorizontal = false;
 
-	var imageElement = document.getElementById('cat');
+	var imageElement = document.getElementById('img1');
 
-	posenet.load().then(function(net){
+
+	posenet.load().then(function (net) {
 		return net.estimateSinglePose(imageElement, imageScaleFactor, flipHorizontal, outputStride)
-	}).then(function(pose){
+	}).then(function (pose) {
 		console.log(pose);
 	})
+
 </script>
+</body>
+
 </html>
