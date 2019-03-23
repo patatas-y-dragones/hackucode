@@ -24,7 +24,6 @@
             }
         }
     </style>
-    <script src="computation.js"></script>
     <!-- Load TensorFlow.js -->
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <!-- Load Posenet -->
@@ -33,43 +32,17 @@
 </head>
 
 <body>
-<div id="info" style="display:none">
-</div>
-<div id="loading">
-    Loading the model...
-</div>
 
-<div id="main" style="display:none">
-    <video id="video" playsinline="" style=" -moz-transform: scaleX(-1);
-        -o-transform: scaleX(-1);
-        -webkit-transform: scaleX(-1);
-        transform: scaleX(-1);
-        display: none;
-        ">
-    </video>
+<div id="main" style="display:block">
+    <video id="video"></video>
+    <button id="startbutton">Take photo</button>
+    <canvas id="canvas"></canvas>
+    <img id="photo" style="display: none">
     <img id="img1" src="/images/man.jpg" width="400" height="400">
-    <canvas id="output">
-    </canvas></div>
+</div>
 
-<script>
-	var image = document.getElementById('img1');
-</script>
-
-<script>
-	var imageScaleFactor = 0.5;
-	var outputStride = 16;
-	var flipHorizontal = false;
-
-	var imageElement = document.getElementById('img1');
-
-
-	posenet.load().then(function (net) {
-		return net.estimateSinglePose(imageElement, imageScaleFactor, flipHorizontal, outputStride)
-	}).then(function (pose) {
-		console.log(pose);
-	})
-
-</script>
+<script src="getImageData.js"></script>
+<script src="video.js"></script>
 </body>
 
 </html>
