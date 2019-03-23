@@ -7,7 +7,8 @@ mainImage = document.querySelector('#img1'),
 width = 320,
 height = 0;
 
-var images = ['/images/man.jpg', '/images/images.jpg'];
+var images = ['/images/man.jpg', '/images/images.jpg', '/images/DeLado.jpg', '/images/guardiaA.jpg',
+	'/images/GuardiaB.jpg', '/images/GuardiaBaja.jpg', '/images/puñetazo.jpg'];
 var point = 0;
 
 async function takepicture() {
