@@ -1,39 +1,75 @@
-<!--<html>
-
-<head>
-  <title>Express</title>
-  <link rel="stylesheet" href="/stylesheets/style.css">
-</head>
-
-<body>
-  <h1>Express</h1>
-  <p>Welcome to Express</p>
-</body>
-
-</html>-->
+<!DOCTYPE html>
 <html>
+
 <head>
-  <!-- Load TensorFlow.js -->
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
-  <!-- Load Posenet -->
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet"></script>
+    <title>PoseNet - Camera Feed Demo</title>
+    <style>
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            color: black;
+        }
+
+        .footer-text {
+            max-width: 600px;
+            text-align: center;
+            margin: auto;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .footer-text, .dg {
+                display: none;
+            }
+        }
+    </style>
+    <script src="computation.js"></script>
+    <!-- Load TensorFlow.js -->
+
+    <!-- Load Posenet -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
-<img id='cat' src='/images/man.jpg' crossorigin="anonymous"/>
-</body>
-<!-- Place your code in the script tag below. You can also use an external .js file -->
+<div id="info" style="display:none">
+</div>
+<div id="loading">
+    Loading the model...
+</div>
+
+<div id="main" style="display:none">
+    <video id="video" playsinline="" style=" -moz-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+        display: none;
+        ">
+    </video>
+    <img id="img1" src="/images/man.jpg" width="400" height="400"></img>
+    <canvas id="output">
+    </canvas></div>
+
+<script>
+	var image = document.getElementById('img1');
+</script>
+
 <script>
 	var imageScaleFactor = 0.5;
 	var outputStride = 16;
 	var flipHorizontal = false;
 
-	var imageElement = document.getElementById('cat');
+	var imageElement = document.getElementById('img1');
 
-	posenet.load().then(function(net){
+
+	posenet.load().then(function (net) {
 		return net.estimateSinglePose(imageElement, imageScaleFactor, flipHorizontal, outputStride)
-	}).then(function(pose){
+	}).then(function (pose) {
 		console.log(pose);
 	})
+
 </script>
+</body>
+
 </html>

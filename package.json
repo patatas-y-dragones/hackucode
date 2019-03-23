@@ -11,9 +11,15 @@
     "@tensorflow-models/posenet": "^1.0.0",
     "@tensorflow/tfjs-node": "^1.0.2",
     "cookie-parser": "~1.4.3",
+    "dat.gui": "^0.7.5",
     "debug": "~2.6.9",
     "express": "~4.16.0",
     "morgan": "~1.9.0",
-    "nodemon": "^1.18.10"
+    "node-gyp": "^3.8.0",
+    "node-webcam": "^0.4.6",
+    "nodemon": "^1.18.10",
+    "nvidia-gpu-monitor": "^2.0.0",
+    "stats.js": "^0.17.0",
+    "tf-posenet": "^1.0.11"
   }
 }
