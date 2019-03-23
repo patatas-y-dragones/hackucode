@@ -4,8 +4,8 @@ canvas       = document.querySelector('#canvas'),
 photo        = document.querySelector('#photo'),
 startbutton  = document.querySelector('#startbutton'),
 mainImage = document.querySelector('#img1'),
-width = 320,
-height = 0;
+width = 712,
+height =400;
 
 var images = ['/images/man.jpg', '/images/images.jpg'];
 var point = 0;
