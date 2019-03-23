@@ -1,12 +1,12 @@
 (function() {
-	
+
 	var streaming = false,
 		video        = document.querySelector('#video'),
 		canvas       = document.querySelector('#canvas'),
 		photo        = document.querySelector('#photo'),
 		startbutton  = document.querySelector('#startbutton'),
-		width = 320,
-		height = 0;
+		width = 850,
+		height = 450;
 	
 	navigator.getMedia = ( navigator.getUserMedia ||
 		navigator.webkitGetUserMedia ||
@@ -50,14 +50,16 @@
 		var data = canvas.toDataURL('image/png');
 		var photo = document.getElementById('photo');
 		photo.setAttribute('src', data);
-		getData(photo);
+		const test2= getData(photo);
+		console.log('test2' + test2)
+
 	}
 	
 	function getData(image) {
-		posenet.load().then(function (net) {
+		return posenet.load().then(function (net) {
 			return net.estimateSinglePose(image, imageScaleFactor, flipHorizontal, outputStride)
-		}).then(function (pose) {
-			console.log(pose);
+		}).then(function (test) {
+			console.log(test);
 		})
 	}
 	
@@ -65,5 +67,5 @@
 		takepicture();
 		ev.preventDefault();
 	}, false);
-	
+
 })();

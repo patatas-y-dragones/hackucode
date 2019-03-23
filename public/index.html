@@ -1,48 +1,40 @@
 <!DOCTYPE html>
-<html>
+
 
 <head>
+    <link rel="stylesheet" href="/stylesheets/style.css">
     <title>PoseNet - Camera Feed Demo</title>
-    <style>
-        .footer {
-            position: fixed;
-            left: 0;
-            bottom: 0;
-            width: 100%;
-            color: black;
-        }
-
-        .footer-text {
-            max-width: 600px;
-            text-align: center;
-            margin: auto;
-        }
-
-        @media only screen and (max-width: 600px) {
-            .footer-text, .dg {
-                display: none;
-            }
-        }
-    </style>
     <!-- Load TensorFlow.js -->
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <!-- Load Posenet -->
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
 </head>
 
-<body>
 
-<div id="main" style="display:block">
-    <video id="video"></video>
-    <button id="startbutton">Take photo</button>
-    <canvas id="canvas"></canvas>
-    <img id="photo" style="display: none">
-    <img id="img1" src="/images/man.jpg" width="400" height="400">
+<nav class="header">
+    <h2 class="logo">Boxing assistant</h2>
+    <ul class="list"><b class="mode-b">Select your mode:</b>
+        <a href="#">Attack</a>
+        <a href="#">Defense</a>
+    </ul>
+</nav>
+
+<div class="container-oriol">
+
+</div>
+
+<div class="main">
+
+<div>
+</div>
+    <video id="video" style="position: center; transform: rotateY(180deg)"></video>
 </div>
 
 <script src="getImageData.js"></script>
 <script src="video.js"></script>
+<script type="text/javascript" src="js/materialize.min.js"></script>
 </body>
 
 </html>

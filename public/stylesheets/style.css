@@ -1,8 +1,68 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding: 0 auto;
+  margin: 0 auto;
+  font: 14px Segoe UI, Helvetica, sans-serif;
+  background-color: rgb(248, 249, 250);
 }
 
-a {
-  color: #00B7FF;
+.logo {
+  line-height: 50px;
+  float: left;
+  font-size: 40px;
+  text-transform: uppercase;
+
+}
+
+.list {
+  float: right;
+  line-height: 100px;
+  text-transform: uppercase;
+  padding-right: 90px;
+
+}
+.mode-b {
+  font-size: 20px;
+}
+
+.list a {
+  color: #fff;
+  font-size: 20px;
+  text-decoration: none;
+  padding: 0 10px;
+
+}
+.list a:hover{
+  color: #FF9D93;
+
+}
+.header{
+  padding: 0 20px;
+  border-top: 0;
+  height: 100px;
+  background: #7F2312;
+  color:#fff;
+  box-shadow: 10px 0px 5px grey;;
+}
+.logo:hover {
+  color: #FF9D93;
+}
+.main {
+  text-align: center;
+}
+.video {
+  display: block;
+  margin: 0 auto;
+  transform: rotateY(180deg);
+
+}
+.id {
+  height:1024px;
+  width:1024px;
+  align-content:center;
+  display: inline-block;
+}
+.container-oriol {
+  margin: 30px 30px 30px 30px;
+  align-items: center;
+  align-content: center;
 }
