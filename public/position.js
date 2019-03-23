@@ -1,3 +1,6 @@
+var images = ['/images/man.jpg', '/images/images.jpg'];
+var point = 0;
+
 async function takepicture() {
 	canvas.width = width;
 	canvas.height = height;
@@ -59,11 +62,16 @@ function arms(pose_user, pose_default) {
 	var left_correctnes = Math.abs(left_default_angle - left_user_angle);
 	var right_correctnes = Math.abs(right_default_angle - right_user_angle);
 	var correctnes = ((left_correctnes + right_correctnes)/2) > 10 ? 0 : 10 -((left_correctnes + right_correctnes)/2);
-	console.log("correctnes: " + correctnes);
+	nextImage();
 	console.log("right def angle: " + right_default_angle);
 	console.log("right user angle: " + right_user_angle);
 	M.toast({html: 'I am a toast!'})
 	
+}
+
+function nextImage() {
+	point += 1;
+	mainImage.setAttribute('src', images[point]);
 }
 
 function getAngle(distance_opuesta, distance_B, distance_C) {
