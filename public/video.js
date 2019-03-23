@@ -68,23 +68,32 @@ var posep;
 		posenet.load().then(async function (net) {
 			return await net.estimateSinglePose(imgDeft, imageScaleFactor, flipHorizontal, outputStride)
 		}).then(function(pose2){
-			getData(pose_user, pose2)
+			getData(pose_user, pose2);
 		})
 	}
 
 	function compareTwoPoses(pose_user, pose_default) {
 		var i;
-		for(i = 0; i < 17; i++) {
-			comparePartOfBody(pose_user.keypoints[i],pose_default.keypoints[i])
-		}
+		arms(pose_user, pose_default);
 		console.log(pose_user.keypoints);
+	}
+	function arms(pose_user, pose_default) {
+
+	}
+	function getAngle(distance_opuesta, distance_B, distance_C) {
+		return Math.acos((distance_B * distance_B + distance_C*distance_C - 2*distance_B*distance_C)/distance_opuesta);		
+	}
+	function getDistance(a, b) {
+		return sqrt(Math.abs(a.x - b.x)*Math.abs(a.x - b.x) + Math.abs(a.y - b.y)*Math.abs(a.y - b.y))
 	}
 	
 	function comparePartOfBody(pose_user, pose_default){
 		if (pose_default.score > 0.75 && pose_user.score > 0.75){
-			if (pose_default.score - pose_user.score < 0.05){
-				console.log(pose_user);
-			}
+			console.log("Part: " + pose_user.part);
+			console.log("User x: " + pose_user.position.x);
+			console.log("User y: " + pose_user.position.y);
+			console.log("Default x: " + pose_default.position.x);
+			console.log("Default y: " + pose_default.position.y);
 		} 
 	}
 	
