@@ -13,47 +13,45 @@
 </html>-->
 <html>
 <head>
-  <!-- Load TensorFlow.js -->
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
-  <script type="text/javascript">
-    var video = document.querySelector("#videoElement");
+    <!-- Load TensorFlow.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
 
-    if (navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices.getUserMedia({ video: true }, handleVideo, videoError);
-
-    }
-
-    function handleVideo(stream){
-      video.srcObject = stream;
-
-    }
-
-    function videoError(e){
-      console.log("Something went wrong!");
-
-    }
-
-  </script>
-  <!-- Load Posenet -->
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet"></script>
+    <!-- Load Posenet -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet"></script>
 </head>
 
 <body>
 <img id='cat' src='/images/man.jpg' crossorigin="anonymous"/>
-<video autoplay="true" id="videoElement"></video>
+<div id="container">
+    <video autoplay="true" id="videoElement">
+
+    </video>
+</div>
+<script>
+    var video = document.querySelector("#videoElement");
+    if (navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({video: true})
+            .then(function (stream) {
+                video.srcObject = stream;
+            })
+            .catch(function (err0r) {
+                console.log("Something went wrong!");
+            });
+    }
+</script>
 </body>
 <!-- Place your code in the script tag below. You can also use an external .js file -->
 <script>
-	var imageScaleFactor = 0.5;
-	var outputStride = 16;
-	var flipHorizontal = false;
+    var imageScaleFactor = 0.5;
+    var outputStride = 16;
+    var flipHorizontal = false;
 
-	var imageElement = document.getElementById('cat');
+    var imageElement = document.getElementById('cat');
 
-	posenet.load().then(function(net){
-		return net.estimateSinglePose(imageElement, imageScaleFactor, flipHorizontal, outputStride)
-	}).then(function(pose){
-		console.log(pose);
-	})
+    posenet.load().then(function (net) {
+        return net.estimateSinglePose(imageElement, imageScaleFactor, flipHorizontal, outputStride)
+    }).then(function (pose) {
+        console.log(pose);
+    })
 </script>
 </html>
