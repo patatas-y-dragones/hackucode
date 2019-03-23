@@ -1,5 +1,4 @@
 var score = 0;
-(function() {
 	
 	var streaming = false,
 		video        = document.querySelector('#video'),
@@ -28,16 +27,11 @@ var score = 0;
 		}
 		
 		const video = document.getElementById('video');
-		video.width = videoWidth;
-		video.height = videoHeight;
 		
-		const mobile = isMobile();
 		const stream = await navigator.mediaDevices.getUserMedia({
 			'audio': false,
 			'video': {
 				facingMode: 'user',
-				width: mobile ? undefined : videoWidth,
-				height: mobile ? undefined : videoHeight,
 			},
 		});
 		video.srcObject = stream;
@@ -156,19 +150,18 @@ var score = 0;
 		try {
 			video = await loadVideo();
 		} catch (e) {
-			let info = document.getElementById('info');
+			/*let info = document.getElementById('info');
 			info.textContent = 'this browser does not support video capture,' +
 				'or this device does not have a camera';
-			info.style.display = 'block';
+			info.style.display = 'block';*/
 			throw e;
 		}
 		
-		detectPoseInRealTime(video, net);
+		//detectPoseInRealTime(video, net);
 	}
 	
 	startbutton.addEventListener('click', function(ev){
 		takepicture();
 		ev.preventDefault();
 	}, false);
-	
-})();
+	bindPage();
