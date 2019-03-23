@@ -51,24 +51,26 @@ var posep;
 		var data = canvas.toDataURL('image/png');
 		var photo = document.getElementById('photo');
 		photo.setAttribute('src', data);
-		getData(photo);
+		var pose_user = getData(photo);
+		haveAllTwoPositions(pose_user);
 	}
 	
 	function getData(image) {
-		posenet.load().then(function (net) {
-			return net.estimateSinglePose(image, imageScaleFactor, flipHorizontal, outputStride)
+		posenet.load().then(async function (net) {
+			return await net.estimateSinglePose(image, imageScaleFactor, flipHorizontal, outputStride)
 		}).then(function (pose) {
-			haveAllTwoPositions(pose);
+			console.log("GETDATA: " + pose);
 		})
 	}
 
 	function haveAllTwoPositions(pose_user) {
 		var imgDeft = document.getElementById('img1');
+		console.log("HERE: " + pose_user);
 		posenet.load().then(function (net) {
-			return net.estimateSinglePose(imgDeft, imageScaleFactor, flipHorizontal, outputStride)
+			net.estimateSinglePose(imgDeft, imageScaleFactor, flipHorizontal, outputStride)
 		}).then(function(pose2){
-			console.log(pose_user, pose2);
-			compareTwoPoses(pose_user, pose2);
+			console.log(getData(pose_user), pose2);
+			compareTwoPoses(getData(pose_user), pose2);
 		})
 	}
 
