@@ -1,0 +1,39 @@
+<!--<html>
+
+<head>
+  <title>Express</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+
+<body>
+  <h1>Express</h1>
+  <p>Welcome to Express</p>
+</body>
+
+</html>-->
+<html>
+<head>
+  <!-- Load TensorFlow.js -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+  <!-- Load Posenet -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet"></script>
+</head>
+
+<body>
+<img id='cat' src='/images/man.jpg' crossorigin="anonymous"/>
+</body>
+<!-- Place your code in the script tag below. You can also use an external .js file -->
+<script>
+	var imageScaleFactor = 0.5;
+	var outputStride = 16;
+	var flipHorizontal = false;
+
+	var imageElement = document.getElementById('cat');
+
+	posenet.load().then(function(net){
+		return net.estimateSinglePose(imageElement, imageScaleFactor, flipHorizontal, outputStride)
+	}).then(function(pose){
+		console.log(pose);
+	})
+</script>
+</html>
