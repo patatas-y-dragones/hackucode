@@ -1,4 +1,4 @@
-var posep;
+var score = 0;
 (function() {
 	
 	var streaming = false,
@@ -53,6 +53,9 @@ var posep;
 	}
 	
 	function getData(image, pose_default) {
+		var imageScaleFactor = 0.5;
+		var outputStride = 8;
+		var flipHorizontal = false;
 		posenet.load().then(async function (net) {
 			return await net.estimateSinglePose(image, imageScaleFactor, flipHorizontal, outputStride)
 		}).then(function (pose_user) {
@@ -97,25 +100,23 @@ var posep;
 			getDistance(pose_user.keypoints[5].position,pose_user.keypoints[7].position),
 			getDistance(pose_user.keypoints[7].position,pose_user.keypoints[9].position)
 		);
-		console.log(left_default_angle);
-		console.log(left_user_angle);
-		if(Math.abs(left_default_angle - left_user_angle) < 5){
-			console.log("Left Correct")
-		}
-		console.log(right_default_angle);
-		console.log(right_user_angle);
-		if(Math.abs(right_default_angle - right_user_angle) < 5){
-			console.log("Right Correct")
-		}
+		console.log("left def angle: " + left_default_angle);
+		console.log("left user angle: " + left_user_angle);
+		var left_correctnes = Math.abs(left_default_angle - left_user_angle);
+		var right_correctnes = Math.abs(right_default_angle - right_user_angle);
+		var correctnes = ((left_correctnes + right_correctnes)/2) > 10 ? 0 : 10 -((left_correctnes + right_correctnes)/2);
+		console.log("correctnes: " + correctnes); 
+		console.log("right def angle: " + right_default_angle);
+		console.log("right user angle: " + right_user_angle);
+		M.toast({html: 'I am a toast!'})
+
 	}
 
 	function getAngle(distance_opuesta, distance_B, distance_C) {
-		var double_B = Math.pow(distance_B, 2);
-		var double_C = Math.pow(distance_C, 2);
-		var x = 2*distance_B*distance_C;
-		var z = double_B + double_C - x;
-		var angle = z/distance_opuesta;	
-		return angle;
+		var x = Math.pow(distance_B, 2) + Math.pow(distance_C, 2) - Math.pow(distance_opuesta, 2);
+		var z = 2 * distance_B * distance_C;	
+		return Math.acos(x/z) * 180 / Math.PI;
+		/* A = arccos ((b^2 + c^2 - a^2)/2bc)*/
 	}
 
 	function getDistance(a, b) {
