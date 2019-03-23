@@ -17,28 +17,36 @@
 </head>
 
 <body>
-<nav class="header">
-    <h2 class="logo">Boxing assistant</h2>
-    <ul class="list"><b class="mode-b">Select your mode:</b>
-        <a href="#">Attack</a>
-        <a href="#">Defense</a>
-    </ul>
+
+<nav>
+    <div class="nav-wrapper" style="background: #e53935">
+        <a href="#!" class="brand-logo left" style="text-transform: uppercase; padding-left: 0.4em;">boxing helper</a>
+        <ul class="left hide-on-med-and-down"></ul>
+    </div>
 </nav>
 
-<div class="container-oriol">
-
-</div>
 
 <div class="main">
 
 <div>
 </div>
-    <video id="video" style="position: center; transform: rotateY(180deg)"></video>
+    <div style="padding-bottom: 2%; padding-top: 2%">
+        TRY TO IMITATE
+    </div>
+    <div class="container-webcam red lighten-1">
+        <video id="video"  class="responsive-video" width="45%" height="45%" style="position: center; transform: rotateY(180deg)"></video>
+        <img id="img1" src="/images/man.jpg" width="45%" height="45%">
+    </div>
+    <div style="padding: 2%">
+    <button id="startbutton" class="waves-effect red lighten-1 waves-light btn">Take photo</button>
+    </div>
+    <canvas id="canvas" style="transform: rotateY(180deg)"></canvas>
+    <div id="container-photo" class="container-webcam red lighten-1">
+        <img id="photo" style="display: none" width="40%" height="40%">
+    </div>
+
 </div>
 
-
-There are 3 main button types described in material design. The raised button is a standard button that signify actions and seek to give depth to a mostly flat page. The floating circular action button is meant for very important functions. Flat buttons are usually used within elements that already have depth like cards or modals.
-Raised
 
 
 <script src="getImageData.js"></script>
