@@ -43,7 +43,10 @@
     </div>
     <canvas id="canvas" style="transform: rotateY(180deg)"></canvas>
     <div id="container-photo" class="container-webcam red lighten-1">
-        <img id="photo" style="display: none" width="40%" height="40%">
+        <img id="photo" style="display: none">
+        <div class="progress">
+            <div class="determinate" style="width: 70%"></div>
+        </div>
     </div>
 
 </div>
@@ -52,7 +55,6 @@
 
 <script src="getImageData.js"></script>
 <script src="video.js"></script>
-<script type="text/javascript" src="js/materialize.min.js"></script>
 <!-- Compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
