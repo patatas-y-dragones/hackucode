@@ -48,15 +48,16 @@
 		canvas.height = height;
 		canvas.getContext('2d').drawImage(video, 0, 0, width, height);
 		var data = canvas.toDataURL('image/png');
+		var photo = document.getElementById('photo');
 		photo.setAttribute('src', data);
-		getData(data);
+		getData(photo);
 	}
 	
 	function getData(image) {
 		posenet.load().then(function (net) {
 			return net.estimateSinglePose(image, imageScaleFactor, flipHorizontal, outputStride)
 		}).then(function (pose) {
-			console.log("Image data: " + pose);
+			console.log(pose);
 		})
 	}
 	
