@@ -66,7 +66,7 @@ function arms(pose_user, pose_default) {
 	console.log("right def angle: " + right_default_angle);
 	console.log("right user angle: " + right_user_angle);
 	M.toast({html: 'I am a toast!'})
-	
+
 }
 
 function nextImage() {

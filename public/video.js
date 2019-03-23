@@ -3,7 +3,7 @@ video        = document.querySelector('#video'),
 canvas       = document.querySelector('#canvas'),
 photo        = document.querySelector('#photo'),
 startbutton  = document.querySelector('#startbutton'),
-mainImage = document.querySelector('#img1')
+mainImage = document.querySelector('#img1'),
 width = 320,
 height = 0;
 
