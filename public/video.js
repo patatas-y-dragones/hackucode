@@ -127,8 +127,11 @@ function legs(pose_user, pose_default) {
 }
 
 function nextImage() {
-	point += 1;
-	mainImage.setAttribute('src', images[point]);
+	if(point != images.length) {
+		point += 1;
+		mainImage.setAttribute('src', images[point]);
+	}
+	final();
 }
 
 function getAngle(distance_opuesta, distance_B, distance_C) {
