@@ -77,14 +77,51 @@ var posep;
 		arms(pose_user, pose_default);
 		console.log(pose_user.keypoints);
 	}
-	function arms(pose_user, pose_default) {
 
+	function arms(pose_user, pose_default) {
+		var left_default_angle = getAngle(
+			getDistance(pose_default.keypoints[6].position,pose_default.keypoints[10].position),
+			getDistance(pose_default.keypoints[6].position,pose_default.keypoints[8].position),
+			getDistance(pose_default.keypoints[8].position,pose_default.keypoints[10].position)
+		);
+		var left_user_angle = getAngle(
+			getDistance(pose_user.keypoints[6].position,pose_user.keypoints[10].position),
+			getDistance(pose_user.keypoints[6].position,pose_user.keypoints[8].position),
+			getDistance(pose_user.keypoints[8].position,pose_user.keypoints[10].position)
+		);
+		var right_default_angle = getAngle(
+			getDistance(pose_default.keypoints[5].position,pose_default.keypoints[9].position),
+			getDistance(pose_default.keypoints[5].position,pose_default.keypoints[7].position),
+			getDistance(pose_default.keypoints[7].position,pose_default.keypoints[9].position)
+		);
+		var right_user_angle = getAngle(
+			getDistance(pose_user.keypoints[5].position,pose_user.keypoints[9].position),
+			getDistance(pose_user.keypoints[5].position,pose_user.keypoints[7].position),
+			getDistance(pose_user.keypoints[7].position,pose_user.keypoints[9].position)
+		);
+		console.log(left_default_angle);
+		console.log(left_user_angle);
+		if(Math.abs(left_default_angle - left_user_angle) < 5){
+			console.log("Left Correct")
+		}
+		console.log(right_default_angle);
+		console.log(right_user_angle);
+		if(Math.abs(right_default_angle - right_user_angle) < 5){
+			console.log("Right Correct")
+		}
 	}
+
 	function getAngle(distance_opuesta, distance_B, distance_C) {
-		return Math.acos((distance_B * distance_B + distance_C*distance_C - 2*distance_B*distance_C)/distance_opuesta);		
+		var double_B = Math.pow(distance_B, 2);
+		var double_C = Math.pow(distance_C, 2);
+		var x = 2*distance_B*distance_C;
+		var z = double_B + double_C - x;
+		var angle = z/distance_opuesta;	
+		return angle;
 	}
+
 	function getDistance(a, b) {
-		return sqrt(Math.abs(a.x - b.x)*Math.abs(a.x - b.x) + Math.abs(a.y - b.y)*Math.abs(a.y - b.y))
+		return Math.sqrt(Math.abs(a.x - b.x)*Math.abs(a.x - b.x) + Math.abs(a.y - b.y)*Math.abs(a.y - b.y))
 	}
 	
 	function comparePartOfBody(pose_user, pose_default){
