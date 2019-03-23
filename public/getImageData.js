@@ -9,4 +9,4 @@ posenet.load().then(function (net) {
 	return net.estimateSinglePose(imageElement, imageScaleFactor, flipHorizontal, outputStride)
 }).then(function (pose) {
 	console.log(pose);
-})
+});

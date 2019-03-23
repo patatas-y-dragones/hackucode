@@ -49,6 +49,15 @@
 		canvas.getContext('2d').drawImage(video, 0, 0, width, height);
 		var data = canvas.toDataURL('image/png');
 		photo.setAttribute('src', data);
+		getData(data);
+	}
+	
+	function getData(image) {
+		posenet.load().then(function (net) {
+			return net.estimateSinglePose(image, imageScaleFactor, flipHorizontal, outputStride)
+		}).then(function (pose) {
+			console.log("Image data: " + pose);
+		})
 	}
 	
 	startbutton.addEventListener('click', function(ev){
