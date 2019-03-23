@@ -147,7 +147,7 @@ var score = 0;
 		} 
 	}
 	
-	export async function bindPage() {
+	async function bindPage() {
 		// Load the PoseNet model weights with architecture 0.75
 		const net = await posenet.load(0.75);
 		
