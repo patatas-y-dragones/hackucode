@@ -15,12 +15,32 @@
 <head>
   <!-- Load TensorFlow.js -->
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+  <script type="text/javascript">
+    var video = document.querySelector("#videoElement");
+
+    if (navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices.getUserMedia({ video: true }, handleVideo, videoError);
+
+    }
+
+    function handleVideo(stream){
+      video.srcObject = stream;
+
+    }
+
+    function videoError(e){
+      console.log("Something went wrong!");
+
+    }
+
+  </script>
   <!-- Load Posenet -->
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet"></script>
 </head>
 
 <body>
 <img id='cat' src='/images/man.jpg' crossorigin="anonymous"/>
+<video autoplay="true" id="videoElement"></video>
 </body>
 <!-- Place your code in the script tag below. You can also use an external .js file -->
 <script>

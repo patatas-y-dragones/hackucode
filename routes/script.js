@@ -2,7 +2,13 @@ let video;
 let poseNet;
 let poses = [];
 let skeletons = [];
+var NodeWebcam = require( "node-webcam" );
 
+var FSWebcam = NodeWebcam.FSWebcam; //require( "node-webcam/webcams/FSWebcam" );
+
+var opts = {};
+
+var cam = new FSWebcam( opts );
 function setup() {
 	createCanvas(640, 480);
 	video = createCapture(VIDEO);
@@ -17,6 +23,11 @@ function setup() {
 	});
 	// Hide the video element, and just show the canvas
 	video.hide();
+	NodeWebcam.capture( "my_picture", {}, function( err, data ) {
+
+		if ( !err ) console.log( "Image created!" );
+
+	});
 }
 
 function modelReady() {
