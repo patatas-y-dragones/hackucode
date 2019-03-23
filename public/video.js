@@ -5,6 +5,8 @@ photo        = document.querySelector('#photo'),
 startbutton  = document.querySelector('#startbutton'),
 mainImage = document.querySelector('#img1'),
 width = 320,
+modal = document.getElementById('myModal'),
+span = document.getElementsByClassName("close")[0],
 height = 0;
 
 var images = ['/images/man.jpg', '/images/images.jpg'];
@@ -173,6 +175,18 @@ function(err) {
 	console.log("An error occured! " + err);
 }
 );
+
+function final(){
+	modal.style.display = "block";
+	/* Si no funciona, es posa: modal.style.visibility = "visible" */
+}
+
+span.onclick = function(event) {
+	if (event.target == modal) {
+		modal.style.display = "none";
+		/* Si no funciona, modal.style.visibility = "hidden" */
+	}
+}
 
 video.addEventListener('canplay', function(ev){
 if (!streaming) {
