@@ -42,7 +42,14 @@ async function haveAllTwoPositions(pose_user) {
 }
 
 function compareTwoPoses(pose_user, pose_default) {
-	arms(pose_user, pose_default);
+	if (pose_default.keypoints[9] || pose_default.keypoints[10] > 0.6){
+		console.log("Arms");
+		arms(pose_user, pose_default);
+	}
+	if (pose_default.keypoints[15] || pose_default.keypoints[16] > 0.6){
+		console.log("Legs");
+		legs(pose_user, pose_default);
+	}
 }
 
 function arms(pose_user, pose_default) {
@@ -68,13 +75,52 @@ function arms(pose_user, pose_default) {
 	);
 	console.log("left def angle: " + left_default_angle);
 	console.log("left user angle: " + left_user_angle);
+	console.log("right def angle: " + right_default_angle);
+	console.log("right user angle: " + right_user_angle);
 	var left_correctnes = Math.abs(left_default_angle - left_user_angle);
 	var right_correctnes = Math.abs(right_default_angle - right_user_angle);
 	var correctnes = ((left_correctnes + right_correctnes)/2) > 10 ? 0 : 10 -((left_correctnes + right_correctnes)/2);
-	nextImage();
+	if (correctnes > 0) {
+		nextImage();
+	} else {
+		M.toast({html: 'Incorrect'})
+	}
+	
+}
+
+function legs(pose_user, pose_default) {
+	var left_default_angle = getAngle(
+		getDistance(pose_default.keypoints[12].position,pose_default.keypoints[16].position),
+		getDistance(pose_default.keypoints[12].position,pose_default.keypoints[14].position),
+		getDistance(pose_default.keypoints[14].position,pose_default.keypoints[16].position)
+	);
+	var left_user_angle = getAngle(
+		getDistance(pose_user.keypoints[12].position,pose_user.keypoints[16].position),
+		getDistance(pose_user.keypoints[12].position,pose_user.keypoints[14].position),
+		getDistance(pose_user.keypoints[14].position,pose_user.keypoints[16].position)
+	);
+	var right_default_angle = getAngle(
+		getDistance(pose_default.keypoints[11].position,pose_default.keypoints[15].position),
+		getDistance(pose_default.keypoints[11].position,pose_default.keypoints[13].position),
+		getDistance(pose_default.keypoints[13].position,pose_default.keypoints[15].position)
+	);
+	var right_user_angle = getAngle(
+		getDistance(pose_user.keypoints[11].position,pose_user.keypoints[15].position),
+		getDistance(pose_user.keypoints[11].position,pose_user.keypoints[13].position),
+		getDistance(pose_user.keypoints[13].position,pose_user.keypoints[15].position)
+	);
+	console.log("left def angle: " + left_default_angle);
+	console.log("left user angle: " + left_user_angle);
 	console.log("right def angle: " + right_default_angle);
 	console.log("right user angle: " + right_user_angle);
-	M.toast({html: 'I am a toast!'})
+	var left_correctnes = Math.abs(left_default_angle - left_user_angle);
+	var right_correctnes = Math.abs(right_default_angle - right_user_angle);
+	var correctnes = ((left_correctnes + right_correctnes)/2) > 10 ? 0 : 10 -((left_correctnes + right_correctnes)/2);
+	if (correctnes > 0) {
+		nextImage();
+	} else {
+		M.toast({html: 'Incorrect'})
+	}
 	
 }
 
