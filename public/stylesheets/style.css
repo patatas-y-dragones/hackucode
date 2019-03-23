@@ -13,6 +13,19 @@ body {
 
 }
 
+#container-canvas{
+    visibility: hidden;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    padding-left: 0px;
+    padding-right: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    margin-left: 12%;
+    margin-right: 12%;
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px grey;
+}
 .list {
   float: right;
   line-height: 100px;
@@ -71,4 +84,55 @@ body {
   width:1024px;
   align-content:center;
   display: inline-block;
+}
+.loading {
+    position: absolute;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    height: 40px;
+    display: flex;
+    align-items: center;
+    visibility: hidden;
+}
+.obj {
+    width: 5px;
+    height: 40px;
+    background: black;
+    margin: 0 3px;
+    border-radius: 10px;
+    animation: loading 0.8s infinite;
+}
+.obj:nth-child(2){
+    animation-delay:0.1s;
+}
+.obj:nth-child(3){
+    animation-delay:0.2s;
+}
+.obj:nth-child(4){
+    animation-delay:0.3s;
+}
+.obj:nth-child(5){
+    animation-delay:0.4s;
+}
+.obj:nth-child(6){
+    animation-delay:0.5s;
+}
+.obj:nth-child(7){
+    animation-delay:0.6s;
+}
+.obj:nth-child(8){
+    animation-delay:0.7s;
+}
+
+@keyframes loading {
+    0%{
+        height: 0;
+    }
+    50%{
+        height: 40px;
+    }
+    100%{
+        height: 0;
+    }
 }
