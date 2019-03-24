@@ -22,6 +22,11 @@ app.use((req, res, next) => {
 });
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.get('/tutorial',function(req,res) {
+	res.sendFile(path.join(__dirname + '/public/tutorial.html'));
+});
+app.get('/final',function(req,res) {
+	res.sendFile(path.join(__dirname + '/public/final.html'));
+});
 
 module.exports = app;

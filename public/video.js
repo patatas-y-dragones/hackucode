@@ -7,11 +7,21 @@ mainImage = document.querySelector('#img1'),
 width = 512,
 height = 290;
 
-var images = ['/images/man.jpg', '/images/images.jpg', '/images/DeLado.jpg', '/images/guardiaA.jpg',
-	'/images/GuardiaB.jpg', '/images/GuardiaBaja.jpg', '/images/puñetazo.jpg'];
+var patata = 0;
+
+
+var images = ['/images/man.jpg', '/images/images.jpg', '/images/guardiaA.jpg',
+	'/images/GuardiaB.jpg', '/images/GuardiaBaja.jpg'];
+
 var point = 0;
 
+setInterval (function(){
+	takepicture();
+	
+}, 1000);
+
 async function takepicture() {
+	patata = 0;
 	canvas.width = width;
 	canvas.height = height;
 	canvas.getContext('2d').drawImage(video, 0, 0, width, height);
@@ -28,7 +38,7 @@ function getData(image, pose_default) {
 	posenet.load().then(async function (net) {
 		return await net.estimateSinglePose(image, imageScaleFactor, flipHorizontal, outputStride)
 	}).then(function (pose_user) {
-		console.log(pose_user, pose_default);
+		//console.log(pose_user, pose_default);
 		compareTwoPoses(pose_user, pose_default);
 	})
 }
@@ -44,11 +54,11 @@ async function haveAllTwoPositions(pose_user) {
 
 function compareTwoPoses(pose_user, pose_default) {
 	if (pose_default.keypoints[9] || pose_default.keypoints[10] > 0.6){
-		console.log("Arms");
+		//console.log("Arms");
 		arms(pose_user, pose_default);
 	}
 	if (pose_default.keypoints[15] || pose_default.keypoints[16] > 0.6){
-		console.log("Legs");
+		//console.log("Legs");
 		legs(pose_user, pose_default);
 	}
 }
@@ -74,17 +84,12 @@ function arms(pose_user, pose_default) {
 		getDistance(pose_user.keypoints[5].position,pose_user.keypoints[7].position),
 		getDistance(pose_user.keypoints[7].position,pose_user.keypoints[9].position)
 	);
-	console.log("left def angle: " + left_default_angle);
-	console.log("left user angle: " + left_user_angle);
-	console.log("right def angle: " + right_default_angle);
-	console.log("right user angle: " + right_user_angle);
 	var left_correctnes = Math.abs(left_default_angle - left_user_angle);
 	var right_correctnes = Math.abs(right_default_angle - right_user_angle);
 	var correctnes = ((left_correctnes + right_correctnes)/2) > 10 ? 0 : 10 -((left_correctnes + right_correctnes)/2);
 	if (correctnes > 0) {
+		patata += 1;
 		nextImage();
-	} else {
-		M.toast({html: 'Incorrect'})
 	}
 	
 }
@@ -110,23 +115,24 @@ function legs(pose_user, pose_default) {
 		getDistance(pose_user.keypoints[11].position,pose_user.keypoints[13].position),
 		getDistance(pose_user.keypoints[13].position,pose_user.keypoints[15].position)
 	);
-	console.log("left def angle: " + left_default_angle);
-	console.log("left user angle: " + left_user_angle);
-	console.log("right def angle: " + right_default_angle);
-	console.log("right user angle: " + right_user_angle);
 	var left_correctnes = Math.abs(left_default_angle - left_user_angle);
 	var right_correctnes = Math.abs(right_default_angle - right_user_angle);
 	var correctnes = ((left_correctnes + right_correctnes)/2) > 10 ? 0 : 10 -((left_correctnes + right_correctnes)/2);
 	if (correctnes > 0) {
-		nextImage();
-	} else {
-		M.toast({html: 'Incorrect'})
+		if(patata !== 1){
+			nextImage();
+		}
 	}
 	
 }
 
 function nextImage() {
 	point += 1;
+	if (point === images.length) {
+		window.location.href = "http://localhost:8000/final";
+	}
+	var bar = document.querySelector('#progress-bar');
+	bar.setAttribute('value', bar.value + 20);
 	mainImage.setAttribute('src', images[point]);
 }
 
