@@ -4,21 +4,20 @@ canvas       = document.querySelector('#canvas'),
 photo        = document.querySelector('#photo'),
 startbutton  = document.querySelector('#startbutton'),
 mainImage = document.querySelector('#img1'),
-width = 320,
+width = 512,
 height = 0;
 
 var patata = 0;
 
 
-var images = ['/images/man.jpg', '/images/images.jpg', '/images/guardiaA.jpg',
-	'/images/GuardiaB.jpg', '/images/GuardiaBaja.jpg'];
+var images = ['images/man31.jpg', '/images/man.jpg', '/images/Guardia.jpg','/images/images.jpg', '/images/guardiaA.jpg', '/images/images.jpg' ];
 
 var point = 0;
 
 setInterval (function(){
 	takepicture();
 	
-}, 1000);
+}, 2000);
 
 async function takepicture() {
 	patata = 0;
@@ -53,12 +52,12 @@ async function haveAllTwoPositions(pose_user) {
 }
 
 function compareTwoPoses(pose_user, pose_default) {
-	if (pose_default.keypoints[9] || pose_default.keypoints[10] > 0.6){
-		//console.log("Arms");
+	if (pose_default.keypoints[9].score || pose_default.keypoints[10].score > 0.7){
+		console.log("Arms");
 		arms(pose_user, pose_default);
 	}
-	if (pose_default.keypoints[15] || pose_default.keypoints[16] > 0.6){
-		//console.log("Legs");
+	if (pose_default.keypoints[15].score || pose_default.keypoints[16].score > 0.7){
+		console.log("Legs");
 		legs(pose_user, pose_default);
 	}
 }
@@ -86,8 +85,11 @@ function arms(pose_user, pose_default) {
 	);
 	var left_correctnes = Math.abs(left_default_angle - left_user_angle);
 	var right_correctnes = Math.abs(right_default_angle - right_user_angle);
-	var correctnes = ((left_correctnes + right_correctnes)/2) > 10 ? 0 : 10 -((left_correctnes + right_correctnes)/2);
-	if (correctnes > 0) {
+	console.log(pose_default);
+	console.log(pose_user);
+	var correctnes = ((left_correctnes + right_correctnes));
+	console.log('Diferencia' + correctnes);
+	if (correctnes < 10) {
 		patata += 1;
 		nextImage();
 	}
@@ -117,8 +119,10 @@ function legs(pose_user, pose_default) {
 	);
 	var left_correctnes = Math.abs(left_default_angle - left_user_angle);
 	var right_correctnes = Math.abs(right_default_angle - right_user_angle);
-	var correctnes = ((left_correctnes + right_correctnes)/2) > 10 ? 0 : 10 -((left_correctnes + right_correctnes)/2);
-	if (correctnes > 0) {
+	var correctnes = ((left_correctnes + right_correctnes)/2);
+	console.log('Diferencia piernas' + correctnes);
+
+	if (correctnes < 10) {
 		if(patata !== 1){
 			nextImage();
 		}

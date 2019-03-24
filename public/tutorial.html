@@ -2,8 +2,10 @@
 
 
 <head>
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="/stylesheets/style.css">
-    <title>PoseNet - Camera Feed Demo</title>
+    <title>E-Punch - Tutorial</title>
     <!-- Load TensorFlow.js -->
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <!-- Load Posenet -->
@@ -19,7 +21,8 @@
 <body>
 
 <nav>
-    <div class="nav-wrapper" style="background: #e53935">
+    <div class="nav-wrapper" style="background: #e53935; position: relative ">
+        <img src="images/logo.png" width="50px" height="50px" style="margin-top: 7px; margin-left: 7px">
         <a href="/" class="brand-logo center" style="padding-left: 0.4em;">ePunch - BOXING HELPER</a>
         <ul class="left hide-on-med-and-down"></ul>
     </div>
@@ -32,11 +35,11 @@
 
     </div>
     <div style="padding-bottom: 2%; padding-top: 2%">
-        TRY TO IMITATE
+        Intenta imitar al boxeador de la derecha.
     </div>
     <div class="container-webcam red lighten-1">
-        <video id="video"  class="responsive-video" width="45%" height="45%" style="position: center; transform: rotateY(180deg)"></video>
-        <img id="img1" src="/images/man.jpg" width="45%" height="45%">
+        <video id="video"  class="responsive-video" style="position: center; transform: rotateY(180deg)"></video>
+        <img id="img1" src="/images/man31.jpg"  width="25%" height="25%" s>
     </div>
     <div style="padding: 2%">
         <button id="startbutton" style="display: none" class="waves-effect red lighten-1 waves-light btn">Take photo</button>
