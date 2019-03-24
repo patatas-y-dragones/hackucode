@@ -17,7 +17,7 @@ var point = 0;
 setInterval(function () {
     takepicture();
 
-}, 2000);
+}, 1000);
 
 async function takepicture() {
     patata = 0;
