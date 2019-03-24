@@ -7,32 +7,21 @@ mainImage = document.querySelector('#img1'),
 width = 320,
 height = 0;
 
-
-const MAX_ITERS = 5;
-
-var dist_op_lda = 0, dist_B_lda=0, dist_C_lda=0;
-var dist_op_lua = 0, dist_B_lua=0, dist_C_lua=0;
-var dist_op_rda = 0, dist_B_rda=0, dist_C_rda=0;
-var dist_op_rua = 0, dist_B_rua=0, dist_C_rua=0;
-
-var dist_op_lda_legs = 0, dist_B_lda_legs=0, dist_C_lda_legs=0;
-var dist_op_lua_legs = 0, dist_B_lua_legs=0, dist_C_lua_legs=0;
-var dist_op_rda_legs = 0, dist_B_rda_legs=0, dist_C_rda_legs=0;
-var dist_op_rua_legs = 0, dist_B_rua_legs=0, dist_C_rua_legs=0;
+var patata = 0;
 
 
-var images = ['/images/man.jpg', '/images/images.jpg', '/images/DeLado.jpg', '/images/guardiaA.jpg',
-	'/images/GuardiaB.jpg', '/images/GuardiaBaja.jpg', '/images/puñetazo.jpg'];
+var images = ['/images/man.jpg', '/images/images.jpg', '/images/guardiaA.jpg',
+	'/images/GuardiaB.jpg', '/images/GuardiaBaja.jpg'];
 
 var point = 0;
 
-var iter = 0;
-	setInterval (function(){
-		takepicture();
-		
-	}, 200);
+setInterval (function(){
+	takepicture();
+	
+}, 1000);
 
 async function takepicture() {
+	patata = 0;
 	canvas.width = width;
 	canvas.height = height;
 	canvas.getContext('2d').drawImage(video, 0, 0, width, height);
@@ -49,7 +38,7 @@ function getData(image, pose_default) {
 	posenet.load().then(async function (net) {
 		return await net.estimateSinglePose(image, imageScaleFactor, flipHorizontal, outputStride)
 	}).then(function (pose_user) {
-		console.log(pose_user, pose_default);
+		//console.log(pose_user, pose_default);
 		compareTwoPoses(pose_user, pose_default);
 	})
 }
@@ -65,101 +54,73 @@ async function haveAllTwoPositions(pose_user) {
 
 function compareTwoPoses(pose_user, pose_default) {
 	if (pose_default.keypoints[9] || pose_default.keypoints[10] > 0.6){
-		console.log("Arms");
+		//console.log("Arms");
 		arms(pose_user, pose_default);
 	}
 	if (pose_default.keypoints[15] || pose_default.keypoints[16] > 0.6){
-		console.log("Legs");
+		//console.log("Legs");
 		legs(pose_user, pose_default);
 	}
 }
 
 function arms(pose_user, pose_default) {
-	if (iter < MAX_ITERS){
-		 dist_op_lda += (getDistance(pose_default.keypoints[6].position,pose_default.keypoints[10].position)/MAX_ITERS);
-		 dist_B_lda += (getDistance(pose_default.keypoints[6].position,pose_default.keypoints[8].position)/MAX_ITERS);
-		 dist_C_lda += (getDistance(pose_default.keypoints[8].position,pose_default.keypoints[10].position)/MAX_ITERS);
-		
-		 dist_op_lua += (getDistance(pose_user.keypoints[6].position,pose_user.keypoints[10].position)/MAX_ITERS);
-		 dist_B_lua += (getDistance(pose_user.keypoints[6].position,pose_user.keypoints[8].position)/MAX_ITERS);
-		 dist_C_lua	+= (getDistance(pose_user.keypoints[8].position,pose_user.keypoints[10].position)/MAX_ITERS);
-		 
-		 dist_op_rda += (getDistance(pose_default.keypoints[5].position,pose_default.keypoints[9].position)/MAX_ITERS);
-		 dist_B_rda += (getDistance(pose_default.keypoints[5].position,pose_default.keypoints[7].position)/MAX_ITERS);
-		 dist_C_rda += (getDistance(pose_default.keypoints[7].position,pose_default.keypoints[9].position)/MAX_ITERS);
-
-		 dist_op_rua += (getDistance(pose_user.keypoints[5].position,pose_user.keypoints[9].position)/MAX_ITERS);
-		 dist_B_rua += (getDistance(pose_user.keypoints[5].position,pose_user.keypoints[7].position)/MAX_ITERS);
-		 dist_C_rua += (getDistance(pose_user.keypoints[7].position,pose_user.keypoints[9].position)/MAX_ITERS);
+	var left_default_angle = getAngle(
+		getDistance(pose_default.keypoints[6].position,pose_default.keypoints[10].position),
+		getDistance(pose_default.keypoints[6].position,pose_default.keypoints[8].position),
+		getDistance(pose_default.keypoints[8].position,pose_default.keypoints[10].position)
+	);
+	var left_user_angle = getAngle(
+		getDistance(pose_user.keypoints[6].position,pose_user.keypoints[10].position),
+		getDistance(pose_user.keypoints[6].position,pose_user.keypoints[8].position),
+		getDistance(pose_user.keypoints[8].position,pose_user.keypoints[10].position)
+	);
+	var right_default_angle = getAngle(
+		getDistance(pose_default.keypoints[5].position,pose_default.keypoints[9].position),
+		getDistance(pose_default.keypoints[5].position,pose_default.keypoints[7].position),
+		getDistance(pose_default.keypoints[7].position,pose_default.keypoints[9].position)
+	);
+	var right_user_angle = getAngle(
+		getDistance(pose_user.keypoints[5].position,pose_user.keypoints[9].position),
+		getDistance(pose_user.keypoints[5].position,pose_user.keypoints[7].position),
+		getDistance(pose_user.keypoints[7].position,pose_user.keypoints[9].position)
+	);
+	var left_correctnes = Math.abs(left_default_angle - left_user_angle);
+	var right_correctnes = Math.abs(right_default_angle - right_user_angle);
+	var correctnes = ((left_correctnes + right_correctnes)/2) > 10 ? 0 : 10 -((left_correctnes + right_correctnes)/2);
+	if (correctnes > 0) {
+		patata += 1;
+		nextImage();
 	}
 	
-	else {
-		var left_default_angle = getAngle(dist_op_lda, dist_B_lda, dist_C_lda);
-		var left_user_angle = getAngle(dist_op_lua, dist_B_lua, dist_C_lua);
-		var right_default_angle = getAngle(dist_op_rda, dist_B_rda, dist_C_rda);
-		var right_user_angle = getAngle(dist_op_rua, dist_B_rua, dist_C_rua);
-		iter = 0;
-		console.log(left_default_angle);
-		console.log(right_user_angle);
-		if(Math.abs(left_default_angle - left_user_angle) < 5){
-			console.log("Left Correct")
-		}
-		console.log(right_default_angle);
-		console.log(left_user_angle);
-		if(Math.abs(right_default_angle - right_user_angle) < 5){
-			console.log("Right Correct")
-		}
-		var left_correctnes = Math.abs(left_default_angle - left_user_angle);
-		var right_correctnes = Math.abs(right_default_angle - right_user_angle);
-		var correctnes = ((left_correctnes + right_correctnes)/2) > 10 ? 0 : 10 -((left_correctnes + right_correctnes)/2);
-		if (correctnes > 0) {
-			nextImage();
-		} else {
-			M.toast({html: 'Incorrect'})
-		}
-	}
 }
-	
-	
-
 
 function legs(pose_user, pose_default) {
-	if (iter < MAX_ITERS){
-		
-		dist_op_lda_legs += getDistance(pose_default.keypoints[12].position,pose_default.keypoints[16].position),
-		dist_B_lda_legs += getDistance(pose_default.keypoints[12].position,pose_default.keypoints[14].position),
-		dist_C_lda_legs += getDistance(pose_default.keypoints[14].position,pose_default.keypoints[16].position)
-
-		dist_op_lua_legs += getDistance(pose_user.keypoints[12].position,pose_user.keypoints[16].position),
-		dist_B_lua_legs +=getDistance(pose_user.keypoints[12].position,pose_user.keypoints[14].position),
-		dist_C_lua_legs += getDistance(pose_user.keypoints[14].position,pose_user.keypoints[16].position)
-	
-		dist_op_rda_legs += getDistance(pose_default.keypoints[11].position,pose_default.keypoints[15].position),
-		dist_B_rda_legs += getDistance(pose_default.keypoints[11].position,pose_default.keypoints[13].position),
-		dist_C_rda_legs += getDistance(pose_default.keypoints[13].position,pose_default.keypoints[15].position)
-
-		dist_op_rua_legs += getDistance(pose_user.keypoints[11].position,pose_user.keypoints[15].position),
-		dist_B_rua_legs += getDistance(pose_user.keypoints[11].position,pose_user.keypoints[13].position),
-		dist_C_rua_legs += getDistance(pose_user.keypoints[13].position,pose_user.keypoints[15].position)
-		
-	}
-	else {
-		var left_default_angle_legs = getAngle(dist_op_lda_legs, dist_B_lda_legs, dist_C_lda_legs);
-		var left_user_angle_legs = getAngle(dist_op_lua_legs, dist_B_lua_legs, dist_C_lua_legs);
-		var right_default_angle_legs = getAngle(dist_op_rda_legs, dist_B_rda_legs, dist_C_rda_legs);
-		var right_user_angle_legs = getAngle(dist_op_rua_legs, dist_B_rua_legs, dist_C_rua_legs);
-		iter = 0;
-		console.log("left def angle: " + left_default_angle);
-		console.log("left user angle: " + left_user_angle);
-		console.log("right def angle: " + right_default_angle);
-		console.log("right user angle: " + right_user_angle);
-		var left_correctnes = Math.abs(left_default_angle - left_user_angle);
-		var right_correctnes = Math.abs(right_default_angle - right_user_angle);
-		var correctnes = ((left_correctnes + right_correctnes)/2) > 10 ? 0 : 10 -((left_correctnes + right_correctnes)/2);
-		if (correctnes > 0) {
+	var left_default_angle = getAngle(
+		getDistance(pose_default.keypoints[12].position,pose_default.keypoints[16].position),
+		getDistance(pose_default.keypoints[12].position,pose_default.keypoints[14].position),
+		getDistance(pose_default.keypoints[14].position,pose_default.keypoints[16].position)
+	);
+	var left_user_angle = getAngle(
+		getDistance(pose_user.keypoints[12].position,pose_user.keypoints[16].position),
+		getDistance(pose_user.keypoints[12].position,pose_user.keypoints[14].position),
+		getDistance(pose_user.keypoints[14].position,pose_user.keypoints[16].position)
+	);
+	var right_default_angle = getAngle(
+		getDistance(pose_default.keypoints[11].position,pose_default.keypoints[15].position),
+		getDistance(pose_default.keypoints[11].position,pose_default.keypoints[13].position),
+		getDistance(pose_default.keypoints[13].position,pose_default.keypoints[15].position)
+	);
+	var right_user_angle = getAngle(
+		getDistance(pose_user.keypoints[11].position,pose_user.keypoints[15].position),
+		getDistance(pose_user.keypoints[11].position,pose_user.keypoints[13].position),
+		getDistance(pose_user.keypoints[13].position,pose_user.keypoints[15].position)
+	);
+	var left_correctnes = Math.abs(left_default_angle - left_user_angle);
+	var right_correctnes = Math.abs(right_default_angle - right_user_angle);
+	var correctnes = ((left_correctnes + right_correctnes)/2) > 10 ? 0 : 10 -((left_correctnes + right_correctnes)/2);
+	if (correctnes > 0) {
+		if(patata !== 1){
 			nextImage();
-		} else {
-			M.toast({html: 'Incorrect'})
 		}
 	}
 	
@@ -167,6 +128,11 @@ function legs(pose_user, pose_default) {
 
 function nextImage() {
 	point += 1;
+	if (point == images.length) {
+		while(1){
+			M.toast({html: 'Final'})
+		}
+	}
 	mainImage.setAttribute('src', images[point]);
 }
 
