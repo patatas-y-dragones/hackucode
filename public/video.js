@@ -128,11 +128,11 @@ function legs(pose_user, pose_default) {
 
 function nextImage() {
 	point += 1;
-	if (point == images.length) {
-		while(1){
-			M.toast({html: 'Final'})
-		}
+	if (point === images.length) {
+		window.location.href = "http://localhost:8000/final";
 	}
+	var bar = document.querySelector('#progress-bar');
+	bar.setAttribute('value', bar.value + 20);
 	mainImage.setAttribute('src', images[point]);
 }
 

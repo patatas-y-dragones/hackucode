@@ -1,9 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+/* GET final listing. */
+router.get('/final', (req, res) => {
+	res.sendFile('final.html', {
+		root: path.join(__dirname, '../')
+	})
 });
 
 module.exports = router;
