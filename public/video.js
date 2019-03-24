@@ -129,7 +129,7 @@ function legs(pose_user, pose_default) {
 function nextImage() {
 	point += 1;
 	if (point === images.length) {
-		window.location.href = "http://localhost:8000/final";
+		window.location.href = "/final";
 	}
 	var bar = document.querySelector('#progress-bar');
 	bar.setAttribute('value', bar.value + 20);
@@ -145,16 +145,6 @@ function getAngle(distance_opuesta, distance_B, distance_C) {
 
 function getDistance(a, b) {
 	return Math.sqrt(Math.abs(a.x - b.x)*Math.abs(a.x - b.x) + Math.abs(a.y - b.y)*Math.abs(a.y - b.y))
-}
-
-function comparePartOfBody(pose_user, pose_default){
-	if (pose_default.score > 0.75 && pose_user.score > 0.75){
-		console.log("Part: " + pose_user.part);
-		console.log("User x: " + pose_user.position.x);
-		console.log("User y: " + pose_user.position.y);
-		console.log("Default x: " + pose_default.position.x);
-		console.log("Default y: " + pose_default.position.y);
-	}
 }
 
 navigator.getMedia = ( navigator.getUserMedia ||
